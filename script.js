@@ -1,77 +1,58 @@
 const form = document.getElementById('form');
 const username = document.getElementById('username');
 const email = document.getElementById('email');
+const phone = document.getElementById('phone');
 const password = document.getElementById('password');
 const repassword = document.getElementById('repassword');
 
+const inputs = [username, email, phone, password, repassword];
+
 function error(input, message) {
-    input.className = 'form-control is-invalid'
+    input.className = 'form-control is-invalid';
     const div = input.nextElementSibling;
-    div.innerText = message
-    div.className = 'invalid-feedback'
+    div.innerText = message;
+    div.className = 'invalid-feedback';
 }
 
 function success(input) {
-    input.className = 'form-control is-valid'
+    input.className = 'form-control is-valid';
 }
 
-const checkEmail = (input) => {
-    const re =
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if ((input.value) === '') {
-        error(input, `${input.id} is required.`);
-    } else if (re.test(input.value)) {
-        success(input);
-    } else {
-        error(input, 'Please enter a valid email address.')
-    }
-};
-
-function checkPasswordsMatch() {
-    if (password.value !== '' && repassword.value !== '') {
-        if (password.value !== repassword.value) {
-            error(repassword, 'Passwords do not match.');
-        } else {
-            success(repassword);
-        }
-    }
+function checkEmail(input) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    input.value === '' ? error(input, 'Email is required.') :
+        re.test(input.value) ? success(input) : error(input, 'Please enter a valid email address.');
 }
 
-function checkRequired(inputs) {
-    inputs.forEach(function (input) {
-        if (input.value === '') {
-            error(input, `${input.id} is required.`);
-        } else {
+function checkPhone(input) {
+    const exp = /^\d{10}$/;
+    input.value === '' ? error(input, 'Phone number is required.') :
+        exp.test(input.value) ? success(input) : error(input, 'Phone number must be exactly 10 digits long.');
+}
+
+function checkLength(input, min, max) {
+    input.value === '' ? error(input, `${input.id} is required.`) :
+        input.value.length < min || input.value.length > max ? error(input, `${input.id} must be between ${min} and ${max} characters.`) :
             success(input);
-        }
-    })
+}
+
+function checkPasswordsMatch(pass1st, pass2nd) {
+    if (pass1st.value === '' || pass2nd.value === '') {
+        error(pass1st, 'Password is required.');
+        error(pass2nd, 'Password is required.');
+    } else if (pass1st.value !== pass2nd.value) {
+        error(pass1st, 'Passwords do not match.');
+        error(pass2nd, 'Passwords do not match.');
+    } else {
+        checkLength(pass1st, 5, 15);
+        success(pass2nd);
+    }
 }
 
 form.addEventListener('submit', function (e) {
     e.preventDefault();
-    checkRequired([username, email, password, repassword]);
+    checkLength(username, 5, 15);
     checkEmail(email);
-    checkPasswordsMatch();
-    /*    if (username.value === '') {
-            error(username, 'Username is required')
-        } else {
-            success(username)
-        }
-        if (email.value === '') {
-            error(email, 'Email is required')
-        } else if (!validateEmail(email.value)) {
-            error(email, 'Please enter a valid email address')
-        } else {
-            success(email)
-        }
-        if (password.value === '') {
-            error(password, 'Password is required')
-        } else {
-            success(password)
-        }
-        if (repassword.value === '') {
-            error(repassword, 'Repassword is required')
-        } else {
-            success(repassword)
-        }*/
+    checkPhone(phone);
+    checkPasswordsMatch(password, repassword);
 });

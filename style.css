@@ -1,3 +1,99 @@
+body {
+    background-color: #f0f0f0;
+    background-image: linear-gradient(to bottom right, #4CAF50, #007bff);
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 12px 20px -10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    background-color: #ffffff;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 28px -10px rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+    background-image: linear-gradient(to right, #007bff, #560bad);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 1.8rem;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #333;
+}
+
+.form-control {
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: none;
+}
+
+.btn-primary {
+    background-color: #560bad;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #6a1a9c;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(86, 11, 173, 0.5);
+}
+
+.btn-primary:hover + .card {
+    background-color: #f8f9fa; /* Change this color as desired */
+}
+
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+.invalid-feedback {
+    color: #dc3545;
+}
+
+.is-valid {
+    border-color: #28a745 !important;
+}
+
+.valid-feedback {
+    color: #28a745;
 }
